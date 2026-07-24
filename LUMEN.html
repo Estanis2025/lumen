@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUMEN | Inspiración</title>
+    
+    <!-- Google Fonts: Nunito (Clara, alegre y legible) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* Diseño Minimalista y Alegre */
+        :root {
+            --bg-color: #fdfbf7;
+            --text-main: #2d3436;
+            --text-muted: #636e72;
+            --accent: #fdcb6e; /* Amarillo cálido y alegre */
+            --accent-hover: #ffeaa7;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        header {
+            margin-bottom: 3rem;
+        }
+
+        h1.logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: var(--text-main);
+            position: relative;
+            display: inline-block;
+        }
+
+        h1.logo::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            bottom: 8px;
+            right: -15px;
+        }
+
+        main {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        /* Contenedor de la Frase */
+        .quote-container {
+            background: var(--card-bg);
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            margin-bottom: 2rem;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: opacity 0.5s ease;
+        }
+
+        .quote-text {
+            font-size: 1.5rem;
+            font-weight: 400;
+            line-height: 1.6;
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .quote-author {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Botón Principal */
+        button {
+            background-color: var(--accent);
+            color: var(--text-main);
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-family: inherit;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(253, 203, 110, 0.4);
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        button:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(253, 203, 110, 0.6);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        /* Motor Web (Resultados de Búsqueda Interna) */
+        .web-engine {
+            background: transparent;
+            border: 1px solid #dfe6e9;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: left;
+            display: none; /* Oculto inicialmente */
+            animation: fadeIn 0.5s ease;
+        }
+
+        .web-engine-title {
+            font-size: 0.9rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .web-engine-title::before {
+            content: '🌐';
+            font-size: 1.2rem;
+        }
+
+        .engine-content {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        .engine-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .engine-link:hover {
+            text-decoration: underline;
+        }
+
+        .loading {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .quote-text { font-size: 1.2rem; }
+            h1.logo { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 class="logo">LUMEN</h1>
+    </header>
+
+    <main>
+        <div class="quote-container" id="quote-container">
+            <p class="quote-text" id="quote-text">"La vida es una serie de cambios naturales y espontáneos. Deja que las cosas fluyan y encuentra la paz en el presente."</p>
+            <p class="quote-author" id="quote-author">— LAO-TSÉ</p>
+        </div>
+
+        <button onclick="generateInspiration()">Nueva Luz</button>
+
+        <!-- Motor Web Interno -->
+        <div class="web-engine" id="web-engine">
+            <div class="web-engine-title">Motor Web de Lumen</div>
+            <div class="engine-content" id="engine-content">
+                <!-- Aquí se inyectará la información de la web -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Base de datos de frases positivas
+        const quotes = [
+            { 
+                text: "En las profundidades del invierno finalmente aprendí que había en mí un verano invencible.", 
+                author: "Albert Camus", 
+                searchQuery: "Albert_Camus" 
+            },
+            { 
+                text: "La felicidad de tu vida depende de la calidad de tus pensamientos.", 
+                author: "Marco Aurelio", 
+                searchQuery: "Marco_Aurelio" 
+            },
+            { 
+                text: "El secreto de la felicidad no se encuentra en la búsqueda de más, sino en el desarrollo de la capacidad para disfrutar de menos.", 
+                author: "Sócrates", 
+                searchQuery: "Sócrates" 
+            },
+            { 
+                text: "Lo que yace detrás de nosotros y lo que yace ante nosotros son asuntos pequeños en comparación con lo que yace dentro de nosotros.", 
+                author: "Ralph Waldo Emerson", 
+                searchQuery: "Ralph_Waldo_Emerson" 
+            },
+            { 
+                text: "No es lo que te pasa, sino cómo reaccionas a ello lo que importa.", 
+                author: "Epicteto", 
+                searchQuery: "Epicteto" 
+            },
+            { 
+                text: "La felicidad depende de nosotros mismos.", 
+                author: "Aristóteles", 
+                searchQuery: "Aristóteles" 
+            },
+            { 
+                text: "Dondequiera que vayas, ve con todo tu corazón.", 
+                author: "Confucio", 
+                searchQuery: "Confucio" 
+            },
+            { 
+                text: "Quien tiene un porqué para vivir puede soportar casi cualquier cómo.", 
+                author: "Friedrich Nietzsche", 
+                searchQuery: "Friedrich_Nietzsche" 
+            },
+            { 
+                text: "Solo hay una forma de felicidad en la vida: amar y ser amado.", 
+                author: "George Sand", 
+                searchQuery: "George_Sand" 
+            },
+            { 
+                text: "Si estás en paz, estás viviendo en el presente.", 
+                author: "Lao-Tsé", 
+                searchQuery: "Lao-Tsé" 
+            }
+        ];
+
+        // Función Principal
+        function generateInspiration() {
+            // 1. Obtener elementos del DOM
+            const quoteText = document.getElementById('quote-text');
+            const quoteAuthor = document.getElementById('quote-author');
+            const container = document.getElementById('quote-container');
+            const webEngine = document.getElementById('web-engine');
+            const engineContent = document.getElementById('engine-content');
+
+            // 2. Efecto de desvanecimiento
+            container.style.opacity = 0;
+
+            setTimeout(() => {
+                // 3. Seleccionar frase aleatoria
+                const randomIndex = Math.floor(Math.random() * quotes.length);
+                const selectedQuote = quotes[randomIndex];
+
+                // 4. Actualizar textos
+                quoteText.innerText = `"${selectedQuote.text}"`;
+                quoteAuthor.innerText = `— ${selectedQuote.author}`;
+                
+                // Mostrar contenedor
+                container.style.opacity = 1;
+
+                // 5. Activar el Motor Web
+                webEngine.style.display = 'block';
+                engineContent.innerHTML = `<span class="loading">Buscando en la web información sobre ${selectedQuote.author}...</span>`;
+                
+                searchWebEngine(selectedQuote);
+
+            }, 500); // 500ms para coincidir con la transición CSS
+        }
+
+        // Función del Motor Web (Utiliza Fetch API y Wikipedia)
+        async function searchWebEngine(quoteObj) {
+            const engineContent = document.getElementById('engine-content');
+            
+            // Endpoint público y gratuito de Wikipedia
+            const endpoint = `https://es.wikipedia.org/api/rest_v1/page/summary/${quoteObj.searchQuery}`;
+
+            try {
+                const response = await fetch(endpoint);
+                
+                if (!response.ok) throw new Error("No se encontró la información");
+                
+                const data = await response.json();
+                
+                // Construir el resultado HTML con la información obtenida de la web
+                let htmlResult = `<strong>¿Quién fue ${quoteObj.author}?</strong><br>`;
+                
+                // Extraer el extracto de texto (summary)
+                if (data.extract) {
+                    htmlResult += `<p>${data.extract}</p>`;
+                } else {
+                    htmlResult += `<p>Un pensador de la historia que dejó un gran legado en la humanidad.</p>`;
+                }
+
+                // Añadir enlace a la fuente original
+                htmlResult += `<a href="${data.content_urls.desktop.page}" target="_blank" class="engine-link">Leer artículo completo en Wikipedia →</a>`;
+
+                engineContent.innerHTML = htmlResult;
+
+            } catch (error) {
+                // Manejo de errores si la red falla
+                engineContent.innerHTML = `
+                    <p>No se pudo conectar a la red para obtener la biografía de ${quoteObj.author}.</p>
+                    <a href="https://www.google.com/search?q=${quoteObj.author}+filosofía" target="_blank" class="engine-link">Buscar en Google →</a>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
