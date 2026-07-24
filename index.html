@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -5,20 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LUMEN | Inspiración</title>
     
-    <!-- Google Fonts: Nunito (Clara, alegre y legible) -->
+    <!-- Google Fonts: Nunito -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
 
     <style>
-        /* Diseño Minimalista y Alegre */
         :root {
             --bg-color: #fdfbf7;
             --text-main: #2d3436;
             --text-muted: #636e72;
-            --accent: #fdcb6e; /* Amarillo cálido y alegre */
+            --accent: #fdcb6e; 
             --accent-hover: #ffeaa7;
             --card-bg: #ffffff;
+            --chat-bubble: #74b9ff; /* Azul suave para la burbuja */
         }
 
         * {
@@ -37,10 +38,11 @@
             min-height: 100vh;
             padding: 2rem;
             text-align: center;
+            overflow-x: hidden;
         }
 
         header {
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
         }
 
         h1.logo {
@@ -64,8 +66,11 @@
         }
 
         main {
-            max-width: 600px;
+            max-width: 700px;
             width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         /* Contenedor de la Frase */
@@ -76,6 +81,7 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.03);
             margin-bottom: 2rem;
             min-height: 250px;
+            width: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -99,6 +105,17 @@
             letter-spacing: 1px;
         }
 
+        /* Contenedor Botón y Burbuja */
+        .action-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 2rem;
+            position: relative;
+            width: 100%;
+        }
+
         /* Botón Principal */
         button {
             background-color: var(--accent);
@@ -112,7 +129,8 @@
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(253, 203, 110, 0.4);
             transition: all 0.3s ease;
-            margin-bottom: 2rem;
+            white-space: nowrap;
+            z-index: 2;
         }
 
         button:hover {
@@ -125,15 +143,52 @@
             transform: translateY(1px);
         }
 
-        /* Motor Web (Resultados de Búsqueda Interna) */
+        /* Burbuja ChatGPT */
+        .chatgpt-bubble {
+            background-color: var(--chat-bubble);
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-decoration: none;
+            text-align: left;
+            max-width: 220px;
+            box-shadow: 0 4px 15px rgba(116, 185, 255, 0.3);
+            position: relative;
+            transition: transform 0.3s ease;
+            line-height: 1.4;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chatgpt-bubble:hover {
+            transform: scale(1.05);
+        }
+
+        /* Triángulo de la burbuja (flecha hacia el botón) */
+        .chatgpt-bubble::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid var(--chat-bubble);
+        }
+
+        /* Motor Web */
         .web-engine {
             background: transparent;
             border: 1px solid #dfe6e9;
             padding: 1.5rem;
             border-radius: 15px;
             text-align: left;
-            display: none; /* Oculto inicialmente */
+            display: none;
             animation: fadeIn 0.5s ease;
+            width: 100%;
         }
 
         .web-engine-title {
@@ -183,9 +238,25 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Diseño Responsivo */
         @media (max-width: 600px) {
             .quote-text { font-size: 1.2rem; }
             h1.logo { font-size: 2rem; }
+            
+            .action-area {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .chatgpt-bubble::before {
+                left: 50%;
+                top: -10px;
+                transform: translateX(-50%);
+                border-left: 10px solid transparent;
+                border-right: 10px solid transparent;
+                border-bottom: 10px solid var(--chat-bubble);
+                border-top: none;
+            }
         }
     </style>
 </head>
@@ -197,142 +268,204 @@
 
     <main>
         <div class="quote-container" id="quote-container">
-            <p class="quote-text" id="quote-text">"La vida es una serie de cambios naturales y espontáneos. Deja que las cosas fluyan y encuentra la paz en el presente."</p>
-            <p class="quote-author" id="quote-author">— LAO-TSÉ</p>
+            <p class="quote-text" id="quote-text">"La mente es todo. Lo que pienses, eso serás."</p>
+            <p class="quote-author" id="quote-author">— BUDA</p>
         </div>
 
-        <button onclick="generateInspiration()">Nueva Luz</button>
+        <div class="action-area">
+            <button onclick="generateInspiration()">Nueva Luz</button>
+            <a href="https://chatgpt.com/" target="_blank" class="chatgpt-bubble" title="Abrir ChatGPT">
+                🤖 Busca en ChatGPT la explicación de la frase para más información.
+            </a>
+        </div>
 
         <!-- Motor Web Interno -->
         <div class="web-engine" id="web-engine">
             <div class="web-engine-title">Motor Web de Lumen</div>
             <div class="engine-content" id="engine-content">
-                <!-- Aquí se inyectará la información de la web -->
+                <!-- Información inyectada -->
             </div>
         </div>
     </main>
 
     <script>
-        // Base de datos de frases positivas
+        // 100 Frases de la humanidad
         const quotes = [
-            { 
-                text: "En las profundidades del invierno finalmente aprendí que había en mí un verano invencible.", 
-                author: "Albert Camus", 
-                searchQuery: "Albert_Camus" 
-            },
-            { 
-                text: "La felicidad de tu vida depende de la calidad de tus pensamientos.", 
-                author: "Marco Aurelio", 
-                searchQuery: "Marco_Aurelio" 
-            },
-            { 
-                text: "El secreto de la felicidad no se encuentra en la búsqueda de más, sino en el desarrollo de la capacidad para disfrutar de menos.", 
-                author: "Sócrates", 
-                searchQuery: "Sócrates" 
-            },
-            { 
-                text: "Lo que yace detrás de nosotros y lo que yace ante nosotros son asuntos pequeños en comparación con lo que yace dentro de nosotros.", 
-                author: "Ralph Waldo Emerson", 
-                searchQuery: "Ralph_Waldo_Emerson" 
-            },
-            { 
-                text: "No es lo que te pasa, sino cómo reaccionas a ello lo que importa.", 
-                author: "Epicteto", 
-                searchQuery: "Epicteto" 
-            },
-            { 
-                text: "La felicidad depende de nosotros mismos.", 
-                author: "Aristóteles", 
-                searchQuery: "Aristóteles" 
-            },
-            { 
-                text: "Dondequiera que vayas, ve con todo tu corazón.", 
-                author: "Confucio", 
-                searchQuery: "Confucio" 
-            },
-            { 
-                text: "Quien tiene un porqué para vivir puede soportar casi cualquier cómo.", 
-                author: "Friedrich Nietzsche", 
-                searchQuery: "Friedrich_Nietzsche" 
-            },
-            { 
-                text: "Solo hay una forma de felicidad en la vida: amar y ser amado.", 
-                author: "George Sand", 
-                searchQuery: "George_Sand" 
-            },
-            { 
-                text: "Si estás en paz, estás viviendo en el presente.", 
-                author: "Lao-Tsé", 
-                searchQuery: "Lao-Tsé" 
-            }
+            { text: "En las profundidades del invierno finalmente aprendí que había en mí un verano invencible.", author: "Albert Camus", searchQuery: "Albert_Camus" },
+            { text: "La felicidad de tu vida depende de la calidad de tus pensamientos.", author: "Marco Aurelio", searchQuery: "Marco_Aurelio" },
+            { text: "El secreto de la felicidad no se encuentra en la búsqueda de más, sino en el desarrollo de la capacidad para disfrutar de menos.", author: "Sócrates", searchQuery: "Sócrates" },
+            { text: "Lo que yace detrás de nosotros y lo que yace ante nosotros son asuntos pequeños en comparación con lo que yace dentro de nosotros.", author: "Ralph Waldo Emerson", searchQuery: "Ralph_Waldo_Emerson" },
+            { text: "No es lo que te pasa, sino cómo reaccionas a ello lo que importa.", author: "Epicteto", searchQuery: "Epicteto" },
+            { text: "La felicidad depende de nosotros mismos.", author: "Aristóteles", searchQuery: "Aristóteles" },
+            { text: "Dondequiera que vayas, ve con todo tu corazón.", author: "Confucio", searchQuery: "Confucio" },
+            { text: "Quien tiene un porqué para vivir puede soportar casi cualquier cómo.", author: "Friedrich Nietzsche", searchQuery: "Friedrich_Nietzsche" },
+            { text: "Si estás en paz, estás viviendo en el presente.", author: "Lao-Tsé", searchQuery: "Lao-Tsé" },
+            { text: "La vida es una serie de cambios naturales. Deja que las cosas fluyan.", author: "Lao-Tsé", searchQuery: "Lao-Tsé" },
+            { text: "Conocer a los demás es sabiduría, conocerte a ti mismo es iluminación.", author: "Lao-Tsé", searchQuery: "Lao-Tsé" },
+            { text: "Solo hay un camino hacia la felicidad y es cesar de preocuparse por cosas que están fuera del alcance de tu voluntad.", author: "Epicteto", searchQuery: "Epicteto" },
+            { text: "No hay viento favorable para el barco que no sabe a qué puerto se dirige.", author: "Séneca", searchQuery: "Séneca" },
+            { text: "La vida es muy simple, pero insistimos en hacerla complicada.", author: "Confucio", searchQuery: "Confucio" },
+            { text: "La mente es todo. Lo que pienses, eso serás.", author: "Buda", searchQuery: "Buda" },
+            { text: "El único verdadero viaje de descubrimiento consiste no en buscar nuevos paisajes, sino en mirar con nuevos ojos.", author: "Marcel Proust", searchQuery: "Marcel_Proust" },
+            { text: "La mejor manera de predecir el futuro es inventarlo.", author: "Alan Kay", searchQuery: "Alan_Kay" },
+            { text: "No podemos enseñar nada a nadie. Solo podemos ayudarles a que lo descubran por sí mismos.", author: "Galileo Galilei", searchQuery: "Galileo_Galilei" },
+            { text: "Pienso, luego existo.", author: "René Descartes", searchQuery: "René_Descartes" },
+            { text: "La educación es el encendido de una llama, no el llenado de un recipiente.", author: "Sócrates", searchQuery: "Sócrates" },
+            { text: "El sabio no dice todo lo que piensa, pero siempre piensa todo lo que dice.", author: "Aristóteles", searchQuery: "Aristóteles" },
+            { text: "Aquel que tiene fe en sí mismo no necesita que los demás crean en él.", author: "Miguel de Unamuno", searchQuery: "Miguel_de_Unamuno" },
+            { text: "Haz cada cosa en la vida como si fuera lo último que hagas.", author: "Marco Aurelio", searchQuery: "Marco_Aurelio" },
+            { text: "Atrévete a saber.", author: "Immanuel Kant", searchQuery: "Immanuel_Kant" },
+            { text: "La esperanza es el sueño del hombre despierto.", author: "Aristóteles", searchQuery: "Aristóteles" },
+            { text: "Nunca rompas el silencio si no es para mejorarlo.", author: "Beethoven", searchQuery: "Ludwig_van_Beethoven" },
+            { text: "Tu tiempo es limitado, así que no lo desperdicies viviendo la vida de alguien más.", author: "Steve Jobs", searchQuery: "Steve_Jobs" },
+            { text: "Vivir es nacer a cada instante.", author: "Erich Fromm", searchQuery: "Erich_Fromm" },
+            { text: "El conocimiento es poder.", author: "Francis Bacon", searchQuery: "Francis_Bacon" },
+            { text: "Si buscas resultados distintos, no hagas siempre lo mismo.", author: "Albert Einstein", searchQuery: "Albert_Einstein" },
+            { text: "Nada grande se ha hecho en el mundo sin una gran pasión.", author: "Georg Wilhelm Friedrich Hegel", searchQuery: "Georg_Wilhelm_Friedrich_Hegel" },
+            { text: "Estar preparado es importante, saber esperar lo es aún más, pero aprovechar el momento adecuado es la clave de la vida.", author: "Arthur Schnitzler", searchQuery: "Arthur_Schnitzler" },
+            { text: "La duda es el principio de la sabiduría.", author: "Aristóteles", searchQuery: "Aristóteles" },
+            { text: "El amor es la alegría de los buenos, la reflexión de los sabios, el asombro de los incrédulos.", author: "Platón", searchQuery: "Platón" },
+            { text: "La medida del amor es amar sin medida.", author: "San Agustín", searchQuery: "Agustín_de_Hipona" },
+            { text: "Lo que sabemos es una gota de agua; lo que ignoramos es el océano.", author: "Isaac Newton", searchQuery: "Isaac_Newton" },
+            { text: "No hay camino para la paz, la paz es el camino.", author: "Mahatma Gandhi", searchQuery: "Mahatma_Gandhi" },
+            { text: "El hombre es la medida de todas las cosas.", author: "Protágoras", searchQuery: "Protágoras" },
+            { text: "Se necesita poco para hacer las cosas bien, pero menos aún para hacerlas mal.", author: "Paul Bocuse", searchQuery: "Paul_Bocuse" },
+            { text: "La ignorancia es la noche de la mente: pero una noche sin luna y sin estrellas.", author: "Confucio", searchQuery: "Confucio" },
+            { text: "El arte de ser sabio es el arte de saber qué pasar por alto.", author: "William James", searchQuery: "William_James" },
+            { text: "Somos lo que hacemos repetidamente. La excelencia, entonces, no es un acto, sino un hábito.", author: "Will Durant", searchQuery: "Will_Durant" },
+            { text: "Es más fácil engañar a la gente, que convencerlos de que han sido engañados.", author: "Mark Twain", searchQuery: "Mark_Twain" },
+            { text: "La libertad consiste en ser dueños de nuestra propia vida.", author: "Platón", searchQuery: "Platón" },
+            { text: "La mayor declaración de amor es la que no se hace; el hombre que siente mucho, habla poco.", author: "Platón", searchQuery: "Platón" },
+            { text: "Un hombre que no se alimenta de sus sueños envejece pronto.", author: "William Shakespeare", searchQuery: "William_Shakespeare" },
+            { text: "La belleza de las cosas existe en el espíritu del que las contempla.", author: "David Hume", searchQuery: "David_Hume" },
+            { text: "Quien se transforma a sí mismo, transforma el mundo.", author: "Dalai Lama", searchQuery: "Dalai_Lama" },
+            { text: "El hombre que mueve una montaña comienza llevándose piedras pequeñas.", author: "Confucio", searchQuery: "Confucio" },
+            { text: "El verdadero viaje de descubrimiento no consiste en buscar nuevos caminos, sino en tener nuevos ojos.", author: "Marcel Proust", searchQuery: "Marcel_Proust" },
+            { text: "Todo el mundo ve lo que aparentas ser, pocos experimentan lo que realmente eres.", author: "Nicolás Maquiavelo", searchQuery: "Nicolás_Maquiavelo" },
+            { text: "El que es bueno para poner excusas raras veces es bueno para cualquier otra cosa.", author: "Benjamin Franklin", searchQuery: "Benjamin_Franklin" },
+            { text: "No malgastes tu tiempo, pues de esa materia está formada la vida.", author: "Benjamin Franklin", searchQuery: "Benjamin_Franklin" },
+            { text: "Al final no importan los años de vida, sino la vida de los años.", author: "Abraham Lincoln", searchQuery: "Abraham_Lincoln" },
+            { text: "Nunca somos tan vulnerables al sufrimiento como cuando amamos.", author: "Sigmund Freud", searchQuery: "Sigmund_Freud" },
+            { text: "Estar solo es el secreto de la invención; estando solo es cuando nacen las ideas.", author: "Nikola Tesla", searchQuery: "Nikola_Tesla" },
+            { text: "La peor prisión es un corazón cerrado.", author: "Juan Pablo II", searchQuery: "Juan_Pablo_II" },
+            { text: "La verdad siempre resplandece al final, cuando ya se han ido todos los que la buscaron.", author: "Julio Cortázar", searchQuery: "Julio_Cortázar" },
+            { text: "Un día de preocupación es más agotador que un día de trabajo.", author: "John Lubbock", searchQuery: "John_Lubbock" },
+            { text: "Nuestra recompensa se encuentra en el esfuerzo y no en el resultado. Un esfuerzo total es una victoria completa.", author: "Mahatma Gandhi", searchQuery: "Mahatma_Gandhi" },
+            { text: "Sé el cambio que quieres ver en el mundo.", author: "Mahatma Gandhi", searchQuery: "Mahatma_Gandhi" },
+            { text: "A veces sentimos que lo que hacemos es tan solo una gota en el mar, pero el mar sería menos si le faltara una gota.", author: "Teresa de Calcuta", searchQuery: "Teresa_de_Calcuta" },
+            { text: "La paz comienza con una sonrisa.", author: "Teresa de Calcuta", searchQuery: "Teresa_de_Calcuta" },
+            { text: "No podemos hacer grandes cosas, pero sí cosas pequeñas con un gran amor.", author: "Teresa de Calcuta", searchQuery: "Teresa_de_Calcuta" },
+            { text: "No importa que te equivoques, lo que importa es que no dejes de intentar.", author: "Thomas Edison", searchQuery: "Thomas_Edison" },
+            { text: "El fracaso es una gran oportunidad para empezar otra vez con más inteligencia.", author: "Henry Ford", searchQuery: "Henry_Ford" },
+            { text: "La perseverancia no es una carrera larga, son muchas carreras cortas una tras otra.", author: "Walter Elliot", searchQuery: "Walter_Elliot" },
+            { text: "Cree que puedes y estarás a medio camino.", author: "Theodore Roosevelt", searchQuery: "Theodore_Roosevelt" },
+            { text: "El optimismo es la fe que conduce al logro.", author: "Helen Keller", searchQuery: "Helen_Keller" },
+            { text: "Mantén tu rostro hacia la luz del sol y no podrás ver la sombra.", author: "Helen Keller", searchQuery: "Helen_Keller" },
+            { text: "El único límite a nuestros logros de mañana están en nuestras dudas de hoy.", author: "Franklin D. Roosevelt", searchQuery: "Franklin_D._Roosevelt" },
+            { text: "No te limites. Puedes ir tan lejos como tu mente te permita.", author: "Mary Kay Ash", searchQuery: "Mary_Kay_Ash" },
+            { text: "Haz una cosa todos los días que te asuste.", author: "Eleanor Roosevelt", searchQuery: "Eleanor_Roosevelt" },
+            { text: "Nadie puede hacerte sentir inferior sin tu consentimiento.", author: "Eleanor Roosevelt", searchQuery: "Eleanor_Roosevelt" },
+            { text: "No llores porque terminó, sonríe porque sucedió.", author: "Gabriel García Márquez", searchQuery: "Gabriel_García_Márquez" },
+            { text: "El mundo cambia con tu ejemplo, no con tu opinión.", author: "Paulo Coelho", searchQuery: "Paulo_Coelho" },
+            { text: "El secreto de avanzar es empezar.", author: "Mark Twain", searchQuery: "Mark_Twain" },
+            { text: "Es durante nuestros momentos más oscuros cuando debemos centrarnos para ver la luz.", author: "Aristóteles Onassis", searchQuery: "Aristóteles_Onassis" },
+            { text: "Juzga a un hombre por sus preguntas en lugar de por sus respuestas.", author: "Voltaire", searchQuery: "Voltaire" },
+            { text: "El sentido común no es un resultado de la educación.", author: "Victor Hugo", searchQuery: "Victor_Hugo" },
+            { text: "La vida es como montar en bicicleta. Para mantener el equilibrio, debes seguir moviéndote.", author: "Albert Einstein", searchQuery: "Albert_Einstein" },
+            { text: "En medio de la dificultad reside la oportunidad.", author: "Albert Einstein", searchQuery: "Albert_Einstein" },
+            { text: "El pesimista ve dificultad en toda oportunidad. El optimista ve oportunidad en toda dificultad.", author: "Winston Churchill", searchQuery: "Winston_Churchill" },
+            { text: "Nunca se es demasiado viejo para fijar otra meta o soñar un nuevo sueño.", author: "C.S. Lewis", searchQuery: "C._S._Lewis" },
+            { text: "Da siempre lo mejor de ti. Lo que plantes ahora, lo cosecharás más tarde.", author: "Og Mandino", searchQuery: "Og_Mandino" },
+            { text: "Para ser el mejor, debes ser capaz de soportar lo peor.", author: "Wilson Kanadi", searchQuery: "Wilson_Kanadi" },
+            { text: "La única manera de hacer un gran trabajo es amar lo que haces.", author: "Steve Jobs", searchQuery: "Steve_Jobs" },
+            { text: "Si no te gusta algo, cámbialo. Si no puedes cambiarlo, cambia tu actitud.", author: "Maya Angelou", searchQuery: "Maya_Angelou" },
+            { text: "Cuanto más trabajo, más suerte parezco tener.", author: "Thomas Jefferson", searchQuery: "Thomas_Jefferson" },
+            { text: "La manera de empezar es dejar de hablar y empezar a hacer.", author: "Walt Disney", searchQuery: "Walt_Disney" },
+            { text: "Todo lo que puedes imaginar es real.", author: "Pablo Picasso", searchQuery: "Pablo_Picasso" },
+            { text: "La alegría de ver y entender es el más perfecto don de la naturaleza.", author: "Albert Einstein", searchQuery: "Albert_Einstein" },
+            { text: "La simplicidad es la máxima sofisticación.", author: "Leonardo da Vinci", searchQuery: "Leonardo_da_Vinci" },
+            { text: "Aprender a dudar es aprender a pensar.", author: "Octavio Paz", searchQuery: "Octavio_Paz" },
+            { text: "No encuentres la falta, encuentra el remedio.", author: "Henry Ford", searchQuery: "Henry_Ford" },
+            { text: "Tu actitud, no tu aptitud, determinará tu altitud.", author: "Zig Ziglar", searchQuery: "Zig_Ziglar" },
+            { text: "Una habitación sin libros es como un cuerpo sin alma.", author: "Cicerón", searchQuery: "Cicerón" },
+            { text: "No basta con tener una buena mente; lo principal es usarla bien.", author: "René Descartes", searchQuery: "René_Descartes" },
+            { text: "El ignorante afirma, el sabio duda y reflexiona.", author: "Aristóteles", searchQuery: "Aristóteles" },
+            { text: "Toma tus riesgos ahora. A medida que creces, te vuelves más miedoso.", author: "Abigail Adams", searchQuery: "Abigail_Adams" }
         ];
+
+        // Lógica de No Repetición
+        let availableQuotes = [];
+
+        function getNextQuote() {
+            // Si el arreglo está vacío, lo llenamos con todas las frases y lo mezclamos
+            if (availableQuotes.length === 0) {
+                availableQuotes = [...quotes];
+                // Función de barajado (Fisher-Yates) para un resultado puramente aleatorio
+                for (let i = availableQuotes.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [availableQuotes[i], availableQuotes[j]] = [availableQuotes[j], availableQuotes[i]];
+                }
+            }
+            // Sacamos y retornamos la última frase del arreglo mezclado
+            return availableQuotes.pop();
+        }
 
         // Función Principal
         function generateInspiration() {
-            // 1. Obtener elementos del DOM
             const quoteText = document.getElementById('quote-text');
             const quoteAuthor = document.getElementById('quote-author');
             const container = document.getElementById('quote-container');
             const webEngine = document.getElementById('web-engine');
             const engineContent = document.getElementById('engine-content');
 
-            // 2. Efecto de desvanecimiento
+            // Efecto de desvanecimiento
             container.style.opacity = 0;
 
             setTimeout(() => {
-                // 3. Seleccionar frase aleatoria
-                const randomIndex = Math.floor(Math.random() * quotes.length);
-                const selectedQuote = quotes[randomIndex];
+                // Seleccionar frase aleatoria SIN REPETIR
+                const selectedQuote = getNextQuote();
 
-                // 4. Actualizar textos
+                // Actualizar textos
                 quoteText.innerText = `"${selectedQuote.text}"`;
                 quoteAuthor.innerText = `— ${selectedQuote.author}`;
                 
                 // Mostrar contenedor
                 container.style.opacity = 1;
 
-                // 5. Activar el Motor Web
+                // Activar el Motor Web
                 webEngine.style.display = 'block';
                 engineContent.innerHTML = `<span class="loading">Buscando en la web información sobre ${selectedQuote.author}...</span>`;
                 
                 searchWebEngine(selectedQuote);
 
-            }, 500); // 500ms para coincidir con la transición CSS
+            }, 500);
         }
 
-        // Función del Motor Web (Utiliza Fetch API y Wikipedia)
+        // Función del Motor Web 
         async function searchWebEngine(quoteObj) {
             const engineContent = document.getElementById('engine-content');
-            
-            // Endpoint público y gratuito de Wikipedia
             const endpoint = `https://es.wikipedia.org/api/rest_v1/page/summary/${quoteObj.searchQuery}`;
 
             try {
                 const response = await fetch(endpoint);
-                
                 if (!response.ok) throw new Error("No se encontró la información");
                 
                 const data = await response.json();
                 
-                // Construir el resultado HTML con la información obtenida de la web
                 let htmlResult = `<strong>¿Quién fue ${quoteObj.author}?</strong><br>`;
                 
-                // Extraer el extracto de texto (summary)
                 if (data.extract) {
                     htmlResult += `<p>${data.extract}</p>`;
                 } else {
                     htmlResult += `<p>Un pensador de la historia que dejó un gran legado en la humanidad.</p>`;
                 }
 
-                // Añadir enlace a la fuente original
                 htmlResult += `<a href="${data.content_urls.desktop.page}" target="_blank" class="engine-link">Leer artículo completo en Wikipedia →</a>`;
-
                 engineContent.innerHTML = htmlResult;
 
             } catch (error) {
-                // Manejo de errores si la red falla
                 engineContent.innerHTML = `
-                    <p>No se pudo conectar a la red para obtener la biografía de ${quoteObj.author}.</p>
+                    <p>No se pudo conectar a la red para obtener la biografía exacta de ${quoteObj.author}.</p>
                     <a href="https://www.google.com/search?q=${quoteObj.author}+filosofía" target="_blank" class="engine-link">Buscar en Google →</a>
                 `;
             }
